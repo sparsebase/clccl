@@ -56,9 +56,9 @@ def full_loop():
     event = core_loop(wait_for = [event])
     download(wait_for = [event])
 
-print 'compiled'
+print('compiled')
 upload().wait()
-print 'uploaded'
+print('uploaded')
 
 times = np.zeros((iters, 2), np.double)
 loop_start = time.time()
@@ -74,8 +74,8 @@ loop_avg = (loop_total / iters)*1e3
 #iters = 100*15
 #print timeit.timeit(lambda: core_loop().wait(), number=iters)*1e3/iters
 timings = np.squeeze(np.diff(times, axis=1))*1e3
-print timings
-print 'total: %r loop avg: %r best: %r iterations: %d std: %r'%(loop_total, loop_avg, timings.min(), iters, np.std(timings))
+print(timings)
+print('total: %r loop avg: %r best: %r iterations: %d std: %r'%(loop_total, loop_avg, timings.min(), iters, np.std(timings)))
 
-print 'download'
+print('download')
 download().wait()

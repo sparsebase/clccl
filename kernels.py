@@ -61,7 +61,7 @@ class CCL(object):
         CL_SOURCE = file(os.path.join(base_path, 'kernels.cl'), 'r').read()
         CL_FLAGS = "-I %s -cl-std=CL1.2 %s" %(common_lib_path, KERNEL_FLAGS)
         CL_FLAGS = cl_opt_decorate(self, CL_FLAGS, max(self.WORKGROUP_TILE_SIZE_X*self.WORKGROUP_TILE_SIZE_Y, self.COMPACT_TILE_ROWS*self.COMPACT_TILE_COLS))
-        print '%r compile flags: %s'%(self.__class__.__name__, CL_FLAGS)
+        print('%r compile flags: %s'%(self.__class__.__name__, CL_FLAGS))
         self.program = cl.Program(ctx, CL_SOURCE).build(options=CL_FLAGS)
 
         self._make_connectivity_image                               = self.program.make_connectivity_image
