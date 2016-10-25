@@ -10,11 +10,12 @@ common_lib_path = 'clcommons/include'
 base_path = os.path.dirname(os.path.realpath(__file__))
 
 #ctx = cl.create_some_context()
-platforms = [ platform for platform in cl.get_platforms() if platform.name == 'NVIDIA CUDA']
+
+platforms = [ platform for platform in cl.get_platforms() if platform.name == 'Intel(R) OpenCL']
 platform = platforms[0]
-devices = [device for device in platform.get_devices() if device.type == cl.device_type.GPU]
+devices = [device for device in platform.get_devices() if device.type == cl.device_type.CPU]
 device = [devices[0]]
-queue_properties = cl.command_queue_properties.PROFILING_ENABLE | cl.command_queue_properties.OUT_OF_ORDER_EXEC_MODE_ENABLE
+queue_properties = cl.command_queue_properties.PROFILING_ENABLE #| cl.command_queue_properties.OUT_OF_ORDER_EXEC_MODE_ENABLE
 ctx = cl.Context(devices)
 queues = [cl.CommandQueue(ctx, device, properties=queue_properties) for device in devices]
 #multicontext
