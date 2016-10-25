@@ -10,7 +10,8 @@ common_lib_path = 'clcommons/include'
 base_path = os.path.dirname(os.path.realpath(__file__))
 
 #ctx = cl.create_some_context()
-platform = cl.get_platforms()[0]
+platforms = [ platform for platform in cl.get_platforms() if platform.name == 'NVIDIA CUDA']
+platform = platforms[0]
 devices = [device for device in platform.get_devices() if device.type == cl.device_type.GPU]
 device = [devices[0]]
 queue_properties = cl.command_queue_properties.PROFILING_ENABLE | cl.command_queue_properties.OUT_OF_ORDER_EXEC_MODE_ENABLE
@@ -39,7 +40,8 @@ def cl_opt_decorate(kop, CL_FLAGS, max_wg_size_used = None, max_wg_size = None):
         max_wg_size = default_max_wg_size
     CL_FLAGS = '-D WG_SIZE_MAX=%d '%(max_wg_size,) + CL_FLAGS
     if is_gpu_platform:
-        CL_FLAGS = '-D GPU_ARCH ' + CL_FLAGS
+        CL_FLAGS2 = '-D GPU_ARCH -D DEVICE_WAVEFRONT_SIZE={wavefront_size} '.format(wavefront_size=device_wg_size)
+        CL_FLAGS = CL_FLAGS2 + CL_FLAGS
 
     if kop.debug == 2:
         CL_FLAGS = '-D DEBUG -g -cl-opt-disable '+CL_FLAGS

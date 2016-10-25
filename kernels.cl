@@ -101,7 +101,7 @@ __constant const uint RIGHT_UP = (1<<6);
 __constant const uint RIGHT_DOWN = (1<<7);
 
 #define isConnected(p1, p2) ((p1) == (p2))
-
+#define PASTE2(NAME1, NAME2)   NAME1 ## NAME2
 #define pixel_at(type, basename, r, c) image_pixel_at(type, PASTE2(basename, _p), im_rows, im_cols, PASTE2(basename, _pitch), (r), (c))
 
 #define CONNECTIVITY_TILE_OUTPUT 0
@@ -554,7 +554,7 @@ uint merge_edge_labels(
     const size_t nline_blocks_to_left = nline_blocks_per_wg * line_wg_id + (line_wg_id < nline_blocks_remainder ? line_wg_id : nline_blocks_remainder);   \
     const size_t n_wg_blocks = nline_blocks_per_wg + (line_wg_id < nline_blocks_remainder ? 1 : 0);                                                       \
     const size_t line_start_index = nline_blocks_to_left * line_block_size + (start);                                                                     \
-    const size_t line_end_index = min(line_start_index + n_wg_blocks * line_block_size, (end));/*block aligned end*/
+    const size_t line_end_index = min(line_start_index + n_wg_blocks * line_block_size, (size_t)(end));/*block aligned end*/
 
 //ncalls: logUp(ntiles, nway_merge)
 //group size: k, 1: k can be anything
