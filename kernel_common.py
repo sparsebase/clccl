@@ -6,12 +6,12 @@ import os
 from numpy import uint32, int32
 from kernel_util import *
 
-common_lib_path = 'clcommons/include'
+common_lib_path = '../clcommons/include'
 base_path = os.path.dirname(os.path.realpath(__file__))
 
 #ctx = cl.create_some_context()
 
-platforms = [ platform for platform in cl.get_platforms() if platform.name == 'Intel(R) OpenCL']
+platforms = [ platform for platform in cl.get_platforms() if platform.name == 'Intel(R) OpenCL'] # NVIDIA CUDA
 platform = platforms[0]
 devices = [device for device in platform.get_devices() if device.type == cl.device_type.CPU]
 device = [devices[0]]
